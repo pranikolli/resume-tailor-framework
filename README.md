@@ -1,5 +1,3 @@
-# resume-tailor-framework
-
 # Prompt-Engineered Resume Tailoring Framework
 
 An AI-powered framework that converts job descriptions into tailored resume bullets using controlled prompting, schema validation, and evidence constraints.  
