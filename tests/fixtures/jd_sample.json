@@ -1,0 +1,7 @@
+{
+  "title": "Backend Software Engineer",
+  "company": "ExampleCo",
+  "responsibilities": ["Design REST APIs", "Write unit tests"],
+  "requirements": [{"text": "Python"}, {"text": "FastAPI"}],
+  "nice_to_haves": ["Kubernetes"]
+}
