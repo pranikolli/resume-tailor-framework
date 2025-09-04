@@ -4,6 +4,8 @@ import os
 from typing import Any, Dict, Set, List
 from .models import TailorRequest, TailorResponse, Evidence, ResumeBullet
 from .prompts import SYSTEM, render_user_prompt, CATEGORIES
+from .utils import log_event
+
 
 # ---------- JSON helpers ----------
 
@@ -83,7 +85,16 @@ def generate(req: TailorRequest) -> TailorResponse:
 
     # Otherwise render prompt and call the model
     user = render_user_prompt(req)
+    # log request (redacted)
+    log_event("request", {
+        "system": SYSTEM,
+        "user": user,
+        "jd": req.jd.model_dump(),
+        "master_resume_bullets": [e.model_dump() for e in req.master_resume_bullets],
+        "target_count": req.target_count
+    })
     raw = call_llm(SYSTEM, user)
     data = _salvage_json(raw)
     resp = TailorResponse(**data)
+    log_event("response", {"response": resp.model_dump()})
     return _enforce_guardrails(req, resp)
