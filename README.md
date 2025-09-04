@@ -32,23 +32,36 @@ This is the **core module** that powers a larger *AI Job Application Assistant*.
 
 ## Project Structure
 
-app/
-api.py         # FastAPI endpoints
-llm.py         # LLM integration (Demo Mode + OpenAI) + guardrails
-models.py      # Pydantic models for schema validation
-pipeline.py    # Orchestrates generate → dedupe → trim
-prompts.py     # System prompt, categories, few-shot, prompt renderer
-settings.py    # .env loader + cached get\_settings()
-utils.py       # Redacted JSON logging
-cli/
-tailor.py      # Command-line interface (respects .env / Demo Mode)
-tests/
-...            # Unit tests (LLM calls monkeypatched)
-logs/            # Redacted request/response logs (created at runtime)
-.env.example     # Template for env vars (safe to commit)
-requirements.txt
-README.md
-
+```text
+.
+├── app/
+│   ├── api.py           # FastAPI endpoints
+│   ├── llm.py           # LLM integration (Demo Mode + OpenAI) + guardrails
+│   ├── models.py        # Pydantic models for schema validation
+│   ├── pipeline.py      # Orchestrates generate → dedupe → trim
+│   ├── prompts.py       # System prompt, categories, few-shot, prompt renderer
+│   ├── settings.py      # .env loader + cached get_settings()
+│   └── utils.py         # Redacted JSON logging
+├── cli/
+│   └── tailor.py        # Command-line interface (respects .env / Demo Mode)
+├── tests/
+│   ├── fixtures/
+│   │   ├── jd_sample.json
+│   │   ├── request_example.json
+│   │   └── resume_master.json
+│   ├── conftest.py
+│   ├── test_api.py
+│   ├── test_cli.py
+│   ├── test_llm.py
+│   ├── test_models.py
+│   ├── test_pipeline.py
+│   └── test_prompts.py
+├── logs/                # Redacted request/response logs (runtime)
+├── .env.example         # Template for env vars (safe to commit)
+├── .gitignore
+├── requirements.txt
+└── README.md
+```
 ---
 
 ## Quickstart
