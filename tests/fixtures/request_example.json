@@ -1,0 +1,14 @@
+{
+  "jd": {
+    "title": "Backend Software Engineer",
+    "company": "ExampleCo",
+    "responsibilities": ["Design REST APIs", "Write unit tests"],
+    "requirements": [{"text": "Python"}, {"text": "FastAPI"}],
+    "nice_to_haves": ["Kubernetes"]
+  },
+  "master_resume_bullets": [
+    {"source": "Master:Citi#2", "text": "Built Spring Boot REST APIs; reduced reporting time 30%"},
+    {"source": "Master:Proj#1", "text": "Developed FastAPI microservice with PostgreSQL and Docker"}
+  ],
+  "target_count": 1
+}
