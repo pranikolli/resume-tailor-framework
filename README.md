@@ -211,6 +211,3 @@ DEMO_MODE=0
 ## License
 
 MIT © 2025 Pranitha Kolli
-
-```
-```
