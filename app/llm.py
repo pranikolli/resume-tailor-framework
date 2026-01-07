@@ -7,7 +7,7 @@ from .prompts import SYSTEM, render_user_prompt, CATEGORIES
 from .utils import log_event
 
 
-# ---------- JSON helpers ----------
+#  JSON helpers 
 
 def _salvage_json(raw: str) -> Dict[str, Any]:
     try:
@@ -29,18 +29,51 @@ def _enforce_guardrails(req: TailorRequest, resp: TailorResponse) -> TailorRespo
             b.category = "Other"
     return resp
 
-# ---------- Demo mode (no LLM) ----------
+#  Demo mode (no LLM) 
 
 def _demo_response(req: TailorRequest) -> TailorResponse:
     """
     Build short bullets directly from evidence so you can test the API
     without an LLM or tokens.
+    Includes safety bounds checking to ensure generated bullets are valid.
     """
     bullets: List[ResumeBullet] = []
-    for ev in req.master_resume_bullets[: req.target_count]:
+    
+    # Safety: Limit to reasonable number of bullets
+    max_bullets = min(req.target_count, len(req.master_resume_bullets), 20)
+    
+    for ev in req.master_resume_bullets[:max_bullets]:
+        # Safety: Validate evidence text is not empty
+        if not ev.text or not ev.text.strip():
+            continue
+            
+        # Safety: Truncate very long evidence text to prevent issues
+        evidence_text = ev.text.strip()
+        if len(evidence_text) > 500:  # Reasonable limit for evidence
+            evidence_text = evidence_text[:497] + "..."
+        
         # Make a short, safe bullet from evidence text (<= 28 words)
-        words = ev.text.strip().rstrip(".").split()
-        text = "Applied experience: " + " ".join(words[:26]) + "."
+        words = evidence_text.rstrip(".").split()
+        
+        # Safety: Ensure we don't exceed word limit
+        # "Applied experience: " = 2 words, so we have 26 words left
+        max_evidence_words = min(len(words), 24)  # Leave room for prefix and suffix
+        bullet_words = words[:max_evidence_words]
+        
+        # Create bullet text with safety checks
+        if bullet_words:
+            text = "Applied experience: " + " ".join(bullet_words) + "."
+        else:
+            # Fallback for empty evidence
+            text = "Applied experience: [No details available]."
+        
+        # Final safety check: ensure bullet is within word limit
+        word_count = len(text.split())
+        if word_count > 28:
+            # Emergency truncation if somehow we exceeded limit
+            words = text.split()[:28]
+            text = " ".join(words)
+        
         bullets.append(
             ResumeBullet(
                 text=text,
@@ -48,9 +81,10 @@ def _demo_response(req: TailorRequest) -> TailorResponse:
                 category="Other"
             )
         )
+    
     return TailorResponse(bullets=bullets, notes="demo mode")
 
-# ---------- Real LLM call (OpenAI) ----------
+# Real LLM call (OpenAI) 
 
 def call_llm(system: str, user: str) -> str:
     """
@@ -75,7 +109,7 @@ def call_llm(system: str, user: str) -> str:
     )
     return resp.choices[0].message.content
 
-# ---------- Public API ----------
+# Public API 
 
 def generate(req: TailorRequest) -> TailorResponse:
     # Fast path: Demo mode returns valid JSON without LLM

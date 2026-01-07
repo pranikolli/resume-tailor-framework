@@ -8,21 +8,39 @@ CATEGORIES: List[str] = [
     "Backend", "Frontend", "Data", "ML", "Cloud", "DevOps", "Security", "Other"
 ]
 
-SYSTEM = f"""You generate resume bullets from a job description using ONLY the provided evidence.
+SYSTEM = f"""You are a resume tailoring engine. You rewrite resume bullets to match a job description while staying strictly grounded in the provided evidence.
 
-Rules:
-- No fabrication. Never invent companies, tools, metrics, or dates.
-- Each bullet ≤ 28 words. Start with a strong action verb; include a metric only if present in evidence.
-- Choose one category from: {", ".join(CATEGORIES)}.
-- If evidence is insufficient, omit the bullet rather than guessing.
+Hard rules:
+- Use ONLY the provided evidence for factual claims. No fabrication: never invent companies, tools, metrics, dates, scope, or responsibilities.
+- You MUST rewrite: output bullet text MUST NOT be an exact copy of any single evidence bullet text.
+- Preserve factual meaning: you may rephrase, reorder, and emphasize relevant skills, but do not change what happened.
+- Each bullet must cite 1–2 evidence items that directly support it.
+- Metrics rule: include a metric ONLY if the SAME evidence item contains that metric. Do not move metrics across sources.
+- Each bullet ≤ 28 words. Start with a strong action verb.
+- Choose exactly one category from: {", ".join(CATEGORIES)}.
+- Choose the MOST specific applicable category; do NOT default to Backend.
+- Use Backend only if no other category fits better.
+- If evidence is insufficient for a bullet, omit the bullet rather than guessing.
 - Output MUST be pure JSON with top-level keys: "bullets" (array) and "notes" (string or null).
 - Each bullet object must be: {{"text": str, "evidence": [{{"source": str, "text": str}}], "category": str}}.
 - Do not include markdown, backticks, prose, or any keys other than specified.
+- Prefer synthesizing 2 related evidence items into a single bullet when possible.
+
+
+Notes field:
+- If ANY job description responsibility or requirement is not supported by the evidence, list it briefly in "notes".
+- Otherwise set "notes" to null.
+
 """
+
 
 # A tiny few-shot to anchor style/shape. (Used later by the LLM wrapper if desired.)
 FEW_SHOT = {
-    "jd": {"title": "Backend Engineer", "company": "ExampleCo", "responsibilities": ["Design REST APIs"]},
+    "jd": {
+        "title": "Backend Engineer",
+        "company": "ExampleCo",
+        "responsibilities": ["Design REST APIs", "Write unit tests"]
+    },
     "evidence": [
         {"source": "Master:Citi#2", "text": "Built Spring Boot REST APIs; reduced reporting time 30%"},
         {"source": "Master:Proj#1", "text": "Developed FastAPI microservice with PostgreSQL and Docker"}
@@ -30,17 +48,24 @@ FEW_SHOT = {
     "expect": {
         "bullets": [
             {
-                "text": "Developed FastAPI microservice and REST endpoints, improving reporting workflows by 30%.",
+                "text": "Built RESTful APIs in Spring Boot to streamline finance reporting workflows, cutting manual reporting time by 30%.",
                 "evidence": [
-                    {"source": "Master:Citi#2", "text": "Built Spring Boot REST APIs; reduced reporting time 30%"},
+                    {"source": "Master:Citi#2", "text": "Built Spring Boot REST APIs; reduced reporting time 30%"}
+                ],
+                "category": "Backend"
+            },
+            {
+                "text": "Developed a FastAPI microservice backed by PostgreSQL and Docker to support backend resume-processing workflows.",
+                "evidence": [
                     {"source": "Master:Proj#1", "text": "Developed FastAPI microservice with PostgreSQL and Docker"}
                 ],
                 "category": "Backend"
             }
         ],
-        "notes": "Grounded in provided evidence only."
+        "notes": "JD mentions unit tests; no evidence explicitly demonstrates unit/integration testing."
     }
 }
+
 
 USER_TEMPLATE = """Job Description (JSON):
 {jd}

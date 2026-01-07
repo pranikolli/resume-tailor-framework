@@ -1,0 +1,45 @@
+{
+  "bullets": [
+    {
+      "text": "Led development of microservices architecture serving 100k+ daily users, reducing response time by 40% using Python, FastAPI, and PostgreSQL",
+      "evidence": [
+        {
+          "source": "Master:CurrentJob#1",
+          "text": "Led development of microservices architecture serving 100k+ daily users, reducing response time by 40% using Python, FastAPI, and PostgreSQL"
+        }
+      ],
+      "category": "Backend"
+    },
+    {
+      "text": "Implemented CI/CD pipelines with Docker and Kubernetes, reducing deployment time from 2 hours to 15 minutes",
+      "evidence": [
+        {
+          "source": "Master:CurrentJob#2",
+          "text": "Implemented CI/CD pipelines with Docker and Kubernetes, reducing deployment time from 2 hours to 15 minutes"
+        }
+      ],
+      "category": "DevOps"
+    },
+    {
+      "text": "Mentored 3 junior developers and conducted code reviews, improving team productivity by 25%",
+      "evidence": [
+        {
+          "source": "Master:CurrentJob#3",
+          "text": "Mentored 3 junior developers and conducted code reviews, improving team productivity by 25%"
+        }
+      ],
+      "category": "Other"
+    },
+    {
+      "text": "Optimized database queries and implemented caching strategies, improving application performance by 60%",
+      "evidence": [
+        {
+          "source": "Master:PreviousJob#2",
+          "text": "Optimized database queries and implemented caching strategies, improving application performance by 60%"
+        }
+      ],
+      "category": "Backend"
+    }
+  ],
+  "notes": null
+}

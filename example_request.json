@@ -1,0 +1,65 @@
+{
+  "jd": {
+    "title": "Senior Software Engineer",
+    "company": "TechCorp",
+    "location": "San Francisco, CA",
+    "responsibilities": [
+      "Design and develop scalable web applications",
+      "Lead technical architecture decisions",
+      "Mentor junior developers",
+      "Collaborate with product managers and designers",
+      "Implement CI/CD pipelines",
+      "Optimize application performance"
+    ],
+    "requirements": [
+      {"text": "5+ years of software development experience"},
+      {"text": "Python and JavaScript proficiency"},
+      {"text": "Experience with cloud platforms (AWS, GCP, or Azure)"},
+      {"text": "Knowledge of microservices architecture"},
+      {"text": "Strong problem-solving skills"},
+      {"text": "Bachelor's degree in Computer Science or related field"}
+    ],
+    "nice_to_haves": [
+      "Experience with Docker and Kubernetes",
+      "Knowledge of machine learning frameworks",
+      "Previous startup experience",
+      "Open source contributions"
+    ]
+  },
+  "master_resume_bullets": [
+    {
+      "source": "Master:CurrentJob#1",
+      "text": "Led development of microservices architecture serving 100k+ daily users, reducing response time by 40% using Python, FastAPI, and PostgreSQL"
+    },
+    {
+      "source": "Master:CurrentJob#2", 
+      "text": "Implemented CI/CD pipelines with Docker and Kubernetes, reducing deployment time from 2 hours to 15 minutes"
+    },
+    {
+      "source": "Master:CurrentJob#3",
+      "text": "Mentored 3 junior developers and conducted code reviews, improving team productivity by 25%"
+    },
+    {
+      "source": "Master:PreviousJob#1",
+      "text": "Built REST APIs using Python and Django, handling 50k+ requests per day with 99.9% uptime"
+    },
+    {
+      "source": "Master:PreviousJob#2",
+      "text": "Optimized database queries and implemented caching strategies, improving application performance by 60%"
+    },
+    {
+      "source": "Master:Project#1",
+      "text": "Developed machine learning model for fraud detection using Python, scikit-learn, and TensorFlow, achieving 95% accuracy"
+    },
+    {
+      "source": "Master:Project#2",
+      "text": "Created automated testing framework using pytest and Jenkins, increasing code coverage from 70% to 95%"
+    },
+    {
+      "source": "Master:Education#1",
+      "text": "Bachelor's degree in Computer Science from University of California, Berkeley (2018)"
+    }
+  ],
+  "target_count": 4
+}
+

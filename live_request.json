@@ -1,0 +1,12 @@
+{
+  "jd": {
+    "title": "Backend Software Engineer",
+    "company": "ExampleCo",
+    "responsibilities": ["Design REST APIs", "Write unit tests"],
+    "requirements": [{"text": "Python"}, {"text": "FastAPI"}]
+  },
+  "master_resume_bullets": [
+    {"source": "Master:Proj#1", "text": "Developed FastAPI microservice with PostgreSQL and Docker"}
+  ],
+  "target_count": 1
+}

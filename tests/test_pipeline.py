@@ -1,4 +1,8 @@
 # tests/test_pipeline.py
+# Unit tests for pipeline.py
+# - Ensures duplicate bullets are removed (case/spacing insensitive).
+# - Ensures bullet count respects target_count.
+# Uses monkeypatching to mock LLM calls with predictable payloads.
 import json
 from pathlib import Path
 from app.models import JobDescription, Evidence, TailorRequest
